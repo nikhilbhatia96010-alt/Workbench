@@ -288,11 +288,11 @@ function App() {
 function Header() {
   return (
     <header className="site-header">
-      <a className="brand" href="#top" aria-label="PDF Workbench home">
+      <a className="brand" href="#top" aria-label="Workbench home">
         <span className="brand-mark">
           <FileText size={24} aria-hidden="true" />
         </span>
-        <span>PDF Workbench</span>
+        <span>Workbench</span>
       </a>
 
       <nav className="main-nav" aria-label="Primary">

@@ -102,7 +102,7 @@ app.use((req, res, next) => {
 
 const port = Number(process.env.PORT ?? 5050);
 app.listen(port, () => {
-  console.log(`PDF Workbench API running on http://127.0.0.1:${port}`);
+  console.log(`Workbench API running on http://127.0.0.1:${port}`);
 });
 
 async function processTool(toolId, files, options) {
@@ -213,8 +213,8 @@ async function compressPdf(files) {
   const entries = [];
   for (const file of files) {
     const pdfDoc = await loadPdf(file.buffer, { updateMetadata: false });
-    pdfDoc.setProducer("PDF Workbench");
-    pdfDoc.setCreator("PDF Workbench");
+    pdfDoc.setProducer("Workbench");
+    pdfDoc.setCreator("Workbench");
     const buffer = await pdfDoc.save({
       useObjectStreams: true,
       addDefaultPage: false,
@@ -244,7 +244,7 @@ async function pdfToWord(file) {
   );
 
   const doc = new Document({
-    creator: "PDF Workbench",
+    creator: "Workbench",
     title: `${baseName(file)} converted`,
     sections: [
       {
@@ -265,10 +265,10 @@ async function pdfToPowerPoint(file) {
   const text = await extractFileText(file);
   const chunks = chunkText(text || "No selectable text was found.", 720);
   const pptx = new PptxGenJS();
-  pptx.author = "PDF Workbench";
+  pptx.author = "Workbench";
   pptx.subject = "Converted PDF text";
   pptx.title = `${baseName(file)} presentation`;
-  pptx.company = "PDF Workbench";
+  pptx.company = "Workbench";
   pptx.layout = "LAYOUT_WIDE";
   pptx.theme = {
     headFontFace: "Aptos Display",
@@ -325,7 +325,7 @@ async function pdfToExcel(file) {
     .map((line) => splitTableLine(line));
 
   const workbook = new ExcelJS.Workbook();
-  workbook.creator = "PDF Workbench";
+  workbook.creator = "Workbench";
   const sheet = workbook.addWorksheet("Extracted text");
   sheet.addRows(rows.length ? rows : [["No selectable text found"]]);
   for (let index = 1; index <= 8; index += 1) {
@@ -414,7 +414,7 @@ async function excelToPdf(file) {
 async function addTextToPdf(file, options) {
   const pdfDoc = await loadPdf(file.buffer);
   const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  const text = cleanInput(options.overlayText || "Edited with PDF Workbench");
+  const text = cleanInput(options.overlayText || "Edited with Workbench");
 
   for (const page of pdfDoc.getPages()) {
     const { height } = page.getSize();
@@ -497,7 +497,7 @@ async function signPdf(file, options) {
 async function watermarkPdf(file, options) {
   const pdfDoc = await loadPdf(file.buffer);
   const font = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-  const text = cleanInput(options.watermarkText || "PDF Workbench");
+  const text = cleanInput(options.watermarkText || "Workbench");
 
   for (const page of pdfDoc.getPages()) {
     const { width, height } = page.getSize();
@@ -565,7 +565,7 @@ async function protectPdf(file, options) {
   const label = cleanInput(options.protectLabel || "CONFIDENTIAL");
 
   pdfDoc.setTitle(`${baseName(file)} protected`);
-  pdfDoc.setSubject("Visible protection notice added by PDF Workbench");
+  pdfDoc.setSubject("Visible protection notice added by Workbench");
 
   for (const page of pdfDoc.getPages()) {
     const { width, height } = page.getSize();
@@ -598,9 +598,9 @@ async function organizePdf(file, options) {
 async function pdfToPdfA(file) {
   const pdfDoc = await loadPdf(file.buffer, { updateMetadata: false });
   pdfDoc.setTitle(`${baseName(file)} archival copy`);
-  pdfDoc.setSubject("Archival copy generated locally by PDF Workbench");
-  pdfDoc.setCreator("PDF Workbench");
-  pdfDoc.setProducer("PDF Workbench");
+  pdfDoc.setSubject("Archival copy generated locally by Workbench");
+  pdfDoc.setCreator("Workbench");
+  pdfDoc.setProducer("Workbench");
   pdfDoc.setKeywords(["archive", "pdf-a", "local-copy"]);
 
   return pdfOutput(await pdfDoc.save({ useObjectStreams: true }), `${baseName(file)}-archive.pdf`);

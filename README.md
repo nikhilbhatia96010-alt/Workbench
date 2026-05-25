@@ -1,4 +1,4 @@
-# PDF Workbench
+# Workbench
 
 A polished full-stack PDF toolbox inspired by modern PDF utility dashboards. It includes a React frontend and an Express backend with upload, process, and download flows for common PDF tasks.
 
