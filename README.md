@@ -20,6 +20,8 @@ npm start
 
 Open `http://127.0.0.1:5050`.
 
+On Windows, you can also double-click `Start Workbench.bat` from the project folder.
+
 For development:
 
 ```bash
